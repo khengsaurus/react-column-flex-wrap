@@ -10,29 +10,26 @@
 }
 
 .column {
-  max-height: 70vh;
   display: flex;
   flex-flow: column wrap;
 }
 
 .row {
-  /* 100vw - legend width - 10px */
-  max-width: calc(100vw - 140px);
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap-reverse;
+  flex-flow: row wrap;
+}
+
+/* ------------------------- Column Sample ------------------------- */
+
+.sample {
+  max-height: 80vh;
+  border: 2px solid transparent;
 }
 
 .big-box {
-  margin: 2px;
-  width: 8vh;
-  height: 8vh;
-}
-
-.small-box {
-  margin: 2px;
-  width: 4vh;
-  height: 4vh;
+  margin: 4px;
+  width: 50px;
+  height: 50px;
 }
 
 .grey {
@@ -43,32 +40,39 @@
   background-color: purple;
 }
 
+/* ------------------------- Legend ------------------------- */
+
 .legend {
   position: fixed;
   bottom: 0;
   right: 0;
-  height: 130px;
-  width: 130px;
+  height: 200px;
+  width: 150px;
   background-color: black;
   border: 2px solid orange;
   z-index: 1000;
 }
 
+.legend-buttons {
+  display: flex;
+  flex-flow: row wrap;
+}
+
 p {
   color: white;
+  font-size: 16px;
   margin: 3px;
 }
 
 button {
-  height: 20px;
-  width: 58px;
+  height: 26px;
+  width: 69px;
   margin: 3px;
   text-align: center;
 }
 
 .big-button {
-  height: 24px;
-  width: 123px;
+  width: 144px;
   margin: 3px;
   text-align: center;
 }
