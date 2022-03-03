@@ -19,8 +19,10 @@ var react_1 = require("react");
 var react_2 = require("react");
 var useDynamicWidth_1 = __importDefault(require("../hooks/useDynamicWidth"));
 /**
- * @description A flex div with column wrap properties by default. Its width will expand to contain all its children and push adjacent elements (unless they are positioned absolute/fixed).
+ * @description A flex div with column wrap properties by default. Its width will expand to contain its children and push adjacent elements (unless they are positioned absolute/fixed).
  * Supports column-reverse and wrap-reverse if passed via styles or a css class, but will override other display and flex-wrap styles.
+ *
+ * Important! The column's max-height or height has to be specified via styles or css class, in px, %, vh, vw, em or rem.
  * @param className optional class name conferring styles
  * @param id optional
  * @param key optional

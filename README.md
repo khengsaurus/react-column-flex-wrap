@@ -4,7 +4,7 @@ Presenting a react-based approach to work around flex layout's deficiency in exp
 
 https://stackoverflow.com/questions/33891709/when-flexbox-items-wrap-in-column-mode-container-does-not-grow-its-width
 
-The core component's width is set by tabulating its children's dimensions.
+The core component's width is set by tabulating its children's dimensions. The column's max-height or height has to be specified via styles or css class, in px, %, vh, vw, em or rem.
 
 ## Example
 
@@ -33,7 +33,7 @@ function render(children) {
 
 The core component overrides display and flex-direction to `column` and `wrap` by default, but supports `column-reverse` and `wrap-reverse` if passed in via styles or css class.
 
-The column's `max-width` or `height` has to be specified (via styles or css class) in px, %, vh, vw, em or rem.
+The column's `max-height` or `height` has to be specified (via styles or css class) in px, %, vh, vw, em or rem.
 
 Optional props:
 • `className: string` - class name conferring styles
