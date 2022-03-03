@@ -1,12 +1,11 @@
 import isEmpty from "lodash.isempty";
 import { useLayoutEffect } from "react";
 import { IUseDynamicWidthProps } from "../types";
-import { getMaxHeight, getMinWidth, getNums } from "../util";
+import { getMaxHeight, getMinWidth } from "../util";
 
-const overrideDisplay = ["block", "none"];
+const overrideDisplay = ["none", "inline", "block", "inline-block"];
 const overrideFlex = ["none", "row", "row-reverse"];
 const overrideWrap = ["none", "nowrap"];
-
 const columnDirs = ["column", "column-reverse"];
 const wrapDirs = ["wrap", "wrap-reverse"];
 
@@ -22,7 +21,7 @@ const useDynamicWidth = ({
 
   return useLayoutEffect(() => {
     if (!!containerRef) {
-      let { display, flexDirection, flexWrap, maxHeight } =
+      let { display, flexDirection, flexWrap, height, maxHeight } =
         window.getComputedStyle(containerRef.current);
       if (!display || overrideDisplay.includes(display)) {
         display = "flex";
@@ -40,9 +39,10 @@ const useDynamicWidth = ({
         columnDirs.includes(flexDirection) &&
         !isEmpty(containerRef.current?.children)
       ) {
-        const maxHeightPx = maxHeight.endsWith("px")
-          ? getNums(maxHeight, 2)
-          : getMaxHeight(containerRef, maxHeight);
+        const maxHeightPx = getMaxHeight(
+          containerRef,
+          maxHeight === "none" || !maxHeight ? height : maxHeight
+        );
         const minWidth = getMinWidth(
           containerRef,
           maxHeightPx,

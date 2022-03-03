@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_isempty_1 = __importDefault(require("lodash.isempty"));
 var react_1 = require("react");
 var util_1 = require("../util");
-var overrideDisplay = ["block", "none"];
+var overrideDisplay = ["none", "inline", "block", "inline-block"];
 var overrideFlex = ["none", "row", "row-reverse"];
 var overrideWrap = ["none", "nowrap"];
 var columnDirs = ["column", "column-reverse"];
@@ -29,7 +29,7 @@ var useDynamicWidth = function (_a) {
     return (0, react_1.useLayoutEffect)(function () {
         var _a;
         if (!!containerRef) {
-            var _b = window.getComputedStyle(containerRef.current), display = _b.display, flexDirection = _b.flexDirection, flexWrap = _b.flexWrap, maxHeight = _b.maxHeight;
+            var _b = window.getComputedStyle(containerRef.current), display = _b.display, flexDirection = _b.flexDirection, flexWrap = _b.flexWrap, height = _b.height, maxHeight = _b.maxHeight;
             if (!display || overrideDisplay.includes(display)) {
                 display = "flex";
             }
@@ -43,9 +43,7 @@ var useDynamicWidth = function (_a) {
                 wrapDirs.includes(flexWrap) &&
                 columnDirs.includes(flexDirection) &&
                 !(0, lodash_isempty_1.default)((_a = containerRef.current) === null || _a === void 0 ? void 0 : _a.children)) {
-                var maxHeightPx = maxHeight.endsWith("px")
-                    ? (0, util_1.getNums)(maxHeight, 2)
-                    : (0, util_1.getMaxHeight)(containerRef, maxHeight);
+                var maxHeightPx = (0, util_1.getMaxHeight)(containerRef, maxHeight === "none" || !maxHeight ? height : maxHeight);
                 var minWidth = (0, util_1.getMinWidth)(containerRef, maxHeightPx, constantHeight, constantWidth);
                 containerRef.current.style.display = display;
                 containerRef.current.style.flexDirection = flexDirection;

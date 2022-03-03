@@ -27,16 +27,29 @@ export function getMaxHeight(
   ref: MutableRefObject<any>,
   maxHeight = ""
 ): number {
-  let _maxH: string | number = Number(maxHeight);
-  if (_maxH > 0) {
-    return _maxH;
+  let _maxH: string | number;
+
+  /**
+   * use maxHeight if provided or maxHeight or height from computed styles
+   */
+  if (maxHeight) {
+    const _n = Number(maxHeight);
+    if (_n > 0) {
+      return _n;
+    }
+    _maxH = maxHeight;
+  } else {
+    let { height, maxHeight: _maxHeight } = window.getComputedStyle(
+      ref.current
+    );
+    _maxH = _maxHeight === "none" || !_maxHeight ? height : maxHeight;
   }
-  _maxH = maxHeight || window.getComputedStyle(ref.current).maxHeight;
+
   if (_maxH.endsWith("px")) {
     return getNums(_maxH, 2);
   } else if (_maxH.endsWith("%")) {
     /**
-     * Need to calculate height as percentage of parent element's height
+     * Calculate height as percentage of parent element's height
      */
     const { height: parentHeight = "0" } = window.getComputedStyle(
       ref.current.parentNode

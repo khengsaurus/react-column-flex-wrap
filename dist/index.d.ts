@@ -1,1 +1,2 @@
-export { default as Column } from "./components/Column";
+import Column from "./components/Column";
+export default Column;

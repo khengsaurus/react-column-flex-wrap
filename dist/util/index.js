@@ -24,19 +24,29 @@ exports.getNums = getNums;
  */
 function getMaxHeight(ref, maxHeight) {
     if (maxHeight === void 0) { maxHeight = ""; }
-    var _maxH = Number(maxHeight);
-    if (_maxH > 0) {
-        return _maxH;
+    var _maxH;
+    /**
+     * use maxHeight if provided or maxHeight or height from computed styles
+     */
+    if (maxHeight) {
+        var _n = Number(maxHeight);
+        if (_n > 0) {
+            return _n;
+        }
+        _maxH = maxHeight;
     }
-    _maxH = maxHeight || window.getComputedStyle(ref.current).maxHeight;
+    else {
+        var _a = window.getComputedStyle(ref.current), height = _a.height, _maxHeight = _a.maxHeight;
+        _maxH = _maxHeight === "none" || !_maxHeight ? height : maxHeight;
+    }
     if (_maxH.endsWith("px")) {
         return getNums(_maxH, 2);
     }
     else if (_maxH.endsWith("%")) {
         /**
-         * Need to calculate height as percentage of parent element's height
+         * Calculate height as percentage of parent element's height
          */
-        var _a = window.getComputedStyle(ref.current.parentNode).height, parentHeight = _a === void 0 ? "0" : _a;
+        var _b = window.getComputedStyle(ref.current.parentNode).height, parentHeight = _b === void 0 ? "0" : _b;
         var percentage = getNums(_maxH, 1);
         return ((Number(parentHeight.slice(0, parentHeight.length - 2)) * percentage) /
             100);
