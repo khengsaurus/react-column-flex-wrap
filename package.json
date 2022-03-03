@@ -25,7 +25,6 @@
     "build": "rm -rf dist && tsc",
     "precommit": "build"
   },
-  "author": "Tzi Kheng Sim <tzikheng@gmail.com>",
   "files": [
     "dist"
   ],
@@ -34,5 +33,15 @@
     "column",
     "flex",
     "wrap"
-  ]
+  ],
+  "license": "MIT",
+  "author": "Tzi Kheng Sim <tzikheng@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khengsaurus/react-column-flex-wrap.git"
+  },
+  "bugs": {
+    "url": "https://github.com/khengsaurus/react-column-flex-wrap/issues"
+  },
+  "homepage": "https://github.com/khengsaurus/react-column-flex-wrap#readme"
 }
