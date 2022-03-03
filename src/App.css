@@ -23,13 +23,20 @@
 
 .sample {
   max-height: 80vh;
-  border: 2px solid transparent;
 }
 
-.big-box {
+.box {
   margin: 4px;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
+}
+
+.border-white {
+  border: 2px solid white;
+}
+
+.border-blue {
+  border: 2px solid blue;
 }
 
 .grey {
@@ -46,14 +53,15 @@
   position: fixed;
   bottom: 0;
   right: 0;
-  height: 200px;
-  width: 150px;
+  height: 750px;
+  width: 160px;
   background-color: black;
   border: 2px solid orange;
   z-index: 1000;
+  overflow-y: scroll;
 }
 
-.legend-buttons {
+.legend-contents {
   display: flex;
   flex-flow: row wrap;
 }
@@ -65,14 +73,14 @@ p {
 }
 
 button {
-  height: 26px;
-  width: 69px;
+  height: 36px;
+  width: 73px;
   margin: 3px;
   text-align: center;
 }
 
 .big-button {
-  width: 144px;
+  width: 152px;
   margin: 3px;
   text-align: center;
 }

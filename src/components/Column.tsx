@@ -8,7 +8,10 @@ interface IColumnProps {
   id?: string;
   key?: string;
   style?: CSSProperties;
-  wrap?: boolean;
+  constantHeight?: boolean;
+  constantWidth?: boolean;
+  dependencies?: any[];
+  effectOn?: boolean;
 }
 
 const Column = forwardRef<MutableRefObject<any>, IColumnProps>(
@@ -20,11 +23,19 @@ const Column = forwardRef<MutableRefObject<any>, IColumnProps>(
       children,
       className = "",
       style = {},
-      wrap = true,
+      constantHeight = false,
+      constantWidth = false,
+      dependencies = [],
+      effectOn = true,
     } = props;
     const _ref = useRef<MutableRefObject<any>>();
-    const containerRef = wrap ? ref || _ref : null;
-    useDynamicWidth({ containerRef });
+    const containerRef = effectOn ? ref || _ref : null;
+    useDynamicWidth({
+      containerRef,
+      constantHeight,
+      constantWidth,
+      dependencies,
+    });
 
     return (
       <div
