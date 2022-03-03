@@ -1,6 +1,6 @@
 {
   "name": "react-column-flex-wrap",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Create flex-wrap columns that resize to contain their children",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

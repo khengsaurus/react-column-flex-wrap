@@ -36,12 +36,12 @@ The core component overrides display and flex-direction to `column` and `wrap` b
 The column's `max-height` or `height` has to be specified (via styles or css class) in px, %, vh, vw, em or rem.
 
 Optional props:
-• `className: string` - class name conferring styles
-• `styles: CSSProperties` - styles
-• `constantWidth: boolean` - take the width of the first child as reference for the others, thereby saving on computation.
-• `constantHeight: boolean` - take the height of the first child as reference for the others, thereby saving on computation.
-• `dependencies: any[]` - dependencies for the core hook
-• `effectOn: boolean` - boolean to toggle the effect
-• `ref: React.MutableRefObject<any>` - ref to be forwarded to the component
-• `id: string`
-• `key: string`
+<br />• `className: string` - class name conferring styles
+<br />• `styles: CSSProperties` - styles
+<br />• `constantWidth: boolean` - take the width of the first child as reference for the others, thereby saving on computation.
+<br />• `constantHeight: boolean` - take the height of the first child as reference for the others, thereby saving on computation.
+<br />• `dependencies: any[]` - dependencies for the core hook
+<br />• `effectOn: boolean` - boolean to toggle the effect
+<br />• `ref: React.MutableRefObject<any>` - ref to be forwarded to the component
+<br />• `id: string`
+<br />• `key: string`
