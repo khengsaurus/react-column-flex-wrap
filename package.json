@@ -1,6 +1,6 @@
 {
   "name": "react-column-flex-wrap",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Create flex-wrap columns that resize to contain their children",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,8 +8,9 @@
   "jsnext:main": "dist/index.es.js",
   "dependencies": {
     "lodash.isempty": "^4.4.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": ">=16.0.0",
+    "react-dom": ">=16.0.0",
+    "react-singleton-hook": "^3.2.3"
   },
   "peerDependencies": {
     "react": ">=16.0.0",

@@ -1,5 +1,5 @@
 import isEmpty from "lodash.isempty";
-import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
+import { useLayoutEffect } from "react";
 import { IUseDynamicWidthProps } from "../types";
 import { getMaxHeight, getMinWidth } from "../util";
 import useWindowDimensions from "./useWindowDimensions";
@@ -11,7 +11,7 @@ const overrideFlex = ["none", "row", "row-reverse"];
 const overrideDisplay = ["none", "inline", "block", "inline-block"];
 
 /**
- * @description Custom hook using useLayoutEffect to calculate minimum required width of element and set the following CSS properties:
+ * Custom hook using useLayoutEffect to calculate minimum required width of element and set the following CSS properties:
  *
  * `display: flex`
  *
@@ -23,13 +23,12 @@ const useDynamicWidth = ({
   columnRef,
   constantHeight,
   constantWidth,
-  onWindowResize = true,
   dependencies = [],
 }: IUseDynamicWidthProps) => {
   /**
    * Proxy ref to detect changes in window dimensions
    */
-  const windowRef = useWindowDimensions(onWindowResize);
+  const windowRef = useWindowDimensions();
   const children: HTMLDivElement[] = columnRef
     ? Array.from(columnRef.current?.children || [])
     : [];

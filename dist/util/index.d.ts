@@ -12,10 +12,9 @@ export declare function getNums(str: string, unitLength: number): number;
  */
 export declare function getMaxHeight(ref: MutableRefObject<any>, maxHeight?: string): number;
 /**
- * @description Get the minimum width of an element by iterating over its children S
+ * Get the minimum width of an element by iterating over its children.
  * @param ref React.MutableRefObject containing the column node
  * @param maxHeight of the parent column in px
  * @return minimum width of element required to contain all its children in a column/-reverse wrap/-reverse flex format
- * @complexity time: O(S); space: S; overhead:
  */
 export declare function getMinWidth(ref: MutableRefObject<any>, maxHeight: number, constantHeight?: boolean, constantWidth?: boolean): number;

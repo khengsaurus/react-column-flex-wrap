@@ -1,6 +1,6 @@
 import { IUseDynamicWidthProps } from "../types";
 /**
- * @description Custom hook using useLayoutEffect to calculate minimum required width of element and set the following CSS properties:
+ * Custom hook using useLayoutEffect to calculate minimum required width of element and set the following CSS properties:
  *
  * `display: flex`
  *
@@ -8,5 +8,5 @@ import { IUseDynamicWidthProps } from "../types";
  *
  * `flex-wrap: wrap` or wrap-reverse if specified via styles or a css class
  */
-declare const useDynamicWidth: ({ columnRef, constantHeight, constantWidth, onWindowResize, dependencies, }: IUseDynamicWidthProps) => void;
+declare const useDynamicWidth: ({ columnRef, constantHeight, constantWidth, dependencies, }: IUseDynamicWidthProps) => void;
 export default useDynamicWidth;

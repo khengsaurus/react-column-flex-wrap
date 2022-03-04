@@ -1,30 +1,28 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { singletonHook } from "react-singleton-hook";
 
 /**
- * Hook to listen to window resize
+ * Returns a number proxy for window size, changes on window resize.
+ * Uses singletonHook from react-singleton-hook so that the proxy can be referenced multiple times without re-calculation.
+ *
  * @param on boolean
- * @return number which changes on window resize
+ * @return proxy number for window size
  */
-const useWindowDimensions = (on = true) => {
-  const windowRef = useRef(0);
+const useWindowDimensionsImpl = () => {
+  const [windowDimProxy, setWindowDimProxy] = useState(0);
 
-  const handleResize = useCallback(
-    () => (windowRef.current = window.innerHeight + 100 * window.innerWidth),
-    []
-  );
+  const handleResize = useCallback(() => {
+    setWindowDimProxy(window.innerHeight + 100 * window.innerWidth);
+  }, []);
 
   useEffect(() => {
-    if (on) {
-      window.addEventListener("resize", handleResize);
-    }
-    return () => {
-      if (on) {
-        window.removeEventListener("resize", handleResize);
-      }
-    };
-  }, [handleResize, on]);
+    window.addEventListener("resize", handleResize);
 
-  return windowRef.current;
+    return () => window.removeEventListener("resize", handleResize);
+  }, [handleResize]);
+
+  return windowDimProxy;
 };
 
+const useWindowDimensions = singletonHook(0, useWindowDimensionsImpl);
 export default useWindowDimensions;

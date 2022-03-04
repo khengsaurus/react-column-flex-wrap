@@ -22,7 +22,7 @@ var overrideWrap = ["none", "nowrap"];
 var overrideFlex = ["none", "row", "row-reverse"];
 var overrideDisplay = ["none", "inline", "block", "inline-block"];
 /**
- * @description Custom hook using useLayoutEffect to calculate minimum required width of element and set the following CSS properties:
+ * Custom hook using useLayoutEffect to calculate minimum required width of element and set the following CSS properties:
  *
  * `display: flex`
  *
@@ -32,11 +32,11 @@ var overrideDisplay = ["none", "inline", "block", "inline-block"];
  */
 var useDynamicWidth = function (_a) {
     var _b;
-    var columnRef = _a.columnRef, constantHeight = _a.constantHeight, constantWidth = _a.constantWidth, _c = _a.onWindowResize, onWindowResize = _c === void 0 ? true : _c, _d = _a.dependencies, dependencies = _d === void 0 ? [] : _d;
+    var columnRef = _a.columnRef, constantHeight = _a.constantHeight, constantWidth = _a.constantWidth, _c = _a.dependencies, dependencies = _c === void 0 ? [] : _c;
     /**
      * Proxy ref to detect changes in window dimensions
      */
-    var windowRef = (0, useWindowDimensions_1.default)(onWindowResize);
+    var windowRef = (0, useWindowDimensions_1.default)();
     var children = columnRef
         ? Array.from(((_b = columnRef.current) === null || _b === void 0 ? void 0 : _b.children) || [])
         : [];

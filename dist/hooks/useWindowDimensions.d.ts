@@ -1,7 +1,2 @@
-/**
- * Hook to listen to window resize
- * @param on boolean
- * @return number which changes on window resize
- */
-declare const useWindowDimensions: (on?: boolean) => number;
+declare const useWindowDimensions: () => number;
 export default useWindowDimensions;

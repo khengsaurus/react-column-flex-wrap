@@ -40,7 +40,6 @@ Optional props:
 <br />• `styles: CSSProperties` - Styles
 <br />• `constantWidth: boolean` - Default false. Take the width of the first child as reference for the others to save on computation.
 <br />• `constantHeight: boolean` - Default false. take the height of the first child as reference for the others to save on computation.
-<br />• `onWindowResize: boolean` - Default true. call the internal resize when the window dimensions change.
 <br />• `dependencies: any[]` - Dependencies for the core hook
 <br />• `effectOn: boolean` - Boolean to toggle the effect
 <br />• `ref: React.MutableRefObject<any>` - Ref to be forwarded to the component
