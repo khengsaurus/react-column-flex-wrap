@@ -15,21 +15,35 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_isempty_1 = __importDefault(require("lodash.isempty"));
 var react_1 = require("react");
 var util_1 = require("../util");
-var overrideDisplay = ["none", "inline", "block", "inline-block"];
-var overrideFlex = ["none", "row", "row-reverse"];
-var overrideWrap = ["none", "nowrap"];
-var columnDirs = ["column", "column-reverse"];
+var useWindowDimensions_1 = __importDefault(require("./useWindowDimensions"));
 var wrapDirs = ["wrap", "wrap-reverse"];
+var columnDirs = ["column", "column-reverse"];
+var overrideWrap = ["none", "nowrap"];
+var overrideFlex = ["none", "row", "row-reverse"];
+var overrideDisplay = ["none", "inline", "block", "inline-block"];
+/**
+ * @description Custom hook using useLayoutEffect to calculate minimum required width of element and set the following CSS properties:
+ *
+ * `display: flex`
+ *
+ * `flex-direction: column` or column-reverse if specified via styles or a css class
+ *
+ * `flex-wrap: wrap` or wrap-reverse if specified via styles or a css class
+ */
 var useDynamicWidth = function (_a) {
     var _b;
-    var containerRef = _a.containerRef, constantHeight = _a.constantHeight, constantWidth = _a.constantWidth, _c = _a.dependencies, dependencies = _c === void 0 ? [] : _c;
-    var children = containerRef
-        ? Array.from(((_b = containerRef.current) === null || _b === void 0 ? void 0 : _b.children) || [])
+    var columnRef = _a.columnRef, constantHeight = _a.constantHeight, constantWidth = _a.constantWidth, _c = _a.onWindowResize, onWindowResize = _c === void 0 ? true : _c, _d = _a.dependencies, dependencies = _d === void 0 ? [] : _d;
+    /**
+     * Proxy ref to detect changes in window dimensions
+     */
+    var windowRef = (0, useWindowDimensions_1.default)(onWindowResize);
+    var children = columnRef
+        ? Array.from(((_b = columnRef.current) === null || _b === void 0 ? void 0 : _b.children) || [])
         : [];
     return (0, react_1.useLayoutEffect)(function () {
         var _a;
-        if (!!containerRef) {
-            var _b = window.getComputedStyle(containerRef.current), display = _b.display, flexDirection = _b.flexDirection, flexWrap = _b.flexWrap, height = _b.height, maxHeight = _b.maxHeight;
+        if (!!columnRef) {
+            var _b = window.getComputedStyle(columnRef.current), display = _b.display, flexDirection = _b.flexDirection, flexWrap = _b.flexWrap, height = _b.height, maxHeight = _b.maxHeight;
             if (!display || overrideDisplay.includes(display)) {
                 display = "flex";
             }
@@ -42,16 +56,16 @@ var useDynamicWidth = function (_a) {
             if (display === "flex" &&
                 wrapDirs.includes(flexWrap) &&
                 columnDirs.includes(flexDirection) &&
-                !(0, lodash_isempty_1.default)((_a = containerRef.current) === null || _a === void 0 ? void 0 : _a.children)) {
-                var maxHeightPx = (0, util_1.getMaxHeight)(containerRef, maxHeight === "none" || !maxHeight ? height : maxHeight);
-                var minWidth = (0, util_1.getMinWidth)(containerRef, maxHeightPx, constantHeight, constantWidth);
-                containerRef.current.style.display = display;
-                containerRef.current.style.flexDirection = flexDirection;
-                containerRef.current.style.flexWrap = flexWrap;
-                containerRef.current.style.width = "".concat(minWidth, "px");
+                !(0, lodash_isempty_1.default)((_a = columnRef.current) === null || _a === void 0 ? void 0 : _a.children)) {
+                var maxHeightPx = (0, util_1.getMaxHeight)(columnRef, maxHeight === "none" || !maxHeight ? height : maxHeight);
+                var minWidth = (0, util_1.getMinWidth)(columnRef, maxHeightPx, constantHeight, constantWidth);
+                columnRef.current.style.display = display;
+                columnRef.current.style.flexDirection = flexDirection;
+                columnRef.current.style.flexWrap = flexWrap;
+                columnRef.current.style.width = "".concat(minWidth, "px");
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, __spreadArray([containerRef, children.length], dependencies, true));
+    }, __spreadArray([columnRef, children.length, windowRef], dependencies, true));
 };
 exports.default = useDynamicWidth;

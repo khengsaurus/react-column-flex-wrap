@@ -101,8 +101,8 @@ function getHeightWidth(child: HTMLDivElement): IHeightWidth {
 
 /**
  * @description Get the minimum width of an element by iterating over its children S
- * @param ref React.MutableRefObject containing the container node
- * @param maxHeight of the parent container in px
+ * @param ref React.MutableRefObject containing the column node
+ * @param maxHeight of the parent column in px
  * @return minimum width of element required to contain all its children in a column/-reverse wrap/-reverse flex format
  * @complexity time: O(S); space: S; overhead:
  */

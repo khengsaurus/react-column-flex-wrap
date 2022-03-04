@@ -1,7 +1,8 @@
 export interface IUseDynamicWidthProps {
-  containerRef: MutableRefObject<any>;
+  columnRef: MutableRefObject<any>;
   constantHeight?: boolean;
   constantWidth?: boolean;
+  onWindowResize?: boolean;
   dependencies?: any[];
 }
 
@@ -13,6 +14,7 @@ export interface IColumnProps {
   style?: CSSProperties;
   constantHeight?: boolean;
   constantWidth?: boolean;
+  onWindowResize?: boolean;
   dependencies?: any[];
   effectOn?: boolean;
 }

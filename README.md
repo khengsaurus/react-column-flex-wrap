@@ -17,6 +17,7 @@ function render(children) {
 
   return (
     <Column
+      // optional props
       className="optional-class-name"
       constantWidth
       style={style}
@@ -35,12 +36,13 @@ The core component's width is set by tabulating its children's dimensions. It wi
 Important! The column's max-height or height has to be specified via styles or css class, in px, %, vh, vw, em or rem.
 
 Optional props:
-<br />• `className: string` - class name conferring styles
-<br />• `styles: CSSProperties` - styles
-<br />• `constantWidth: boolean` - take the width of the first child as reference for the others, thereby saving on computation.
-<br />• `constantHeight: boolean` - take the height of the first child as reference for the others, thereby saving on computation.
-<br />• `dependencies: any[]` - dependencies for the core hook
-<br />• `effectOn: boolean` - boolean to toggle the effect
-<br />• `ref: React.MutableRefObject<any>` - ref to be forwarded to the component
+<br />• `className: string` - Class name conferring styles
+<br />• `styles: CSSProperties` - Styles
+<br />• `constantWidth: boolean` - Default false. Take the width of the first child as reference for the others to save on computation.
+<br />• `constantHeight: boolean` - Default false. take the height of the first child as reference for the others to save on computation.
+<br />• `onWindowResize: boolean` - Default true. call the internal resize when the window dimensions change.
+<br />• `dependencies: any[]` - Dependencies for the core hook
+<br />• `effectOn: boolean` - Boolean to toggle the effect
+<br />• `ref: React.MutableRefObject<any>` - Ref to be forwarded to the component
 <br />• `id: string`
 <br />• `key: string`

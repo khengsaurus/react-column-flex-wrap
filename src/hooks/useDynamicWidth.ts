@@ -1,28 +1,43 @@
 import isEmpty from "lodash.isempty";
-import { useLayoutEffect } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { IUseDynamicWidthProps } from "../types";
 import { getMaxHeight, getMinWidth } from "../util";
+import useWindowDimensions from "./useWindowDimensions";
 
-const overrideDisplay = ["none", "inline", "block", "inline-block"];
-const overrideFlex = ["none", "row", "row-reverse"];
-const overrideWrap = ["none", "nowrap"];
-const columnDirs = ["column", "column-reverse"];
 const wrapDirs = ["wrap", "wrap-reverse"];
+const columnDirs = ["column", "column-reverse"];
+const overrideWrap = ["none", "nowrap"];
+const overrideFlex = ["none", "row", "row-reverse"];
+const overrideDisplay = ["none", "inline", "block", "inline-block"];
 
+/**
+ * @description Custom hook using useLayoutEffect to calculate minimum required width of element and set the following CSS properties:
+ *
+ * `display: flex`
+ *
+ * `flex-direction: column` or column-reverse if specified via styles or a css class
+ *
+ * `flex-wrap: wrap` or wrap-reverse if specified via styles or a css class
+ */
 const useDynamicWidth = ({
-  containerRef,
+  columnRef,
   constantHeight,
   constantWidth,
+  onWindowResize = true,
   dependencies = [],
 }: IUseDynamicWidthProps) => {
-  const children: HTMLDivElement[] = containerRef
-    ? Array.from(containerRef.current?.children || [])
+  /**
+   * Proxy ref to detect changes in window dimensions
+   */
+  const windowRef = useWindowDimensions(onWindowResize);
+  const children: HTMLDivElement[] = columnRef
+    ? Array.from(columnRef.current?.children || [])
     : [];
 
   return useLayoutEffect(() => {
-    if (!!containerRef) {
+    if (!!columnRef) {
       let { display, flexDirection, flexWrap, height, maxHeight } =
-        window.getComputedStyle(containerRef.current);
+        window.getComputedStyle(columnRef.current);
       if (!display || overrideDisplay.includes(display)) {
         display = "flex";
       }
@@ -37,26 +52,26 @@ const useDynamicWidth = ({
         display === "flex" &&
         wrapDirs.includes(flexWrap) &&
         columnDirs.includes(flexDirection) &&
-        !isEmpty(containerRef.current?.children)
+        !isEmpty(columnRef.current?.children)
       ) {
         const maxHeightPx = getMaxHeight(
-          containerRef,
+          columnRef,
           maxHeight === "none" || !maxHeight ? height : maxHeight
         );
         const minWidth = getMinWidth(
-          containerRef,
+          columnRef,
           maxHeightPx,
           constantHeight,
           constantWidth
         );
-        containerRef.current.style.display = display;
-        containerRef.current.style.flexDirection = flexDirection;
-        containerRef.current.style.flexWrap = flexWrap;
-        containerRef.current.style.width = `${minWidth}px`;
+        columnRef.current.style.display = display;
+        columnRef.current.style.flexDirection = flexDirection;
+        columnRef.current.style.flexWrap = flexWrap;
+        columnRef.current.style.width = `${minWidth}px`;
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [containerRef, children.length, ...dependencies]);
+  }, [columnRef, children.length, windowRef, ...dependencies]);
 };
 
 export default useDynamicWidth;
