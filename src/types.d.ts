@@ -15,6 +15,7 @@ export interface IColumnProps {
   constantWidth?: boolean;
   dependencies?: any[];
   effectOn?: boolean;
+  testId?: string;
 }
 
 export interface IHeightWidth {

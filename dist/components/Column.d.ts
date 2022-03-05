@@ -14,6 +14,7 @@ import { IColumnProps } from "../types";
  * @param dependencies optional dependencies for the core hook used to set the component's width
  * @param effectOn default true - set the effect on or off
  * @param ref React.MutableRefObject<any> to be forwarded to the core parent div
+ * @param testId optional - testId to be assigned to the Component. If not provided, if id is provided it be appended to `rcfw-c-`. If neither are provided, the Component will have testId of `rcfw-c`
  */
 declare const Column: React.ForwardRefExoticComponent<IColumnProps & React.RefAttributes<React.MutableRefObject<any>>>;
 export default Column;

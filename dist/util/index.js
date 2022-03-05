@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMinWidth = exports.getMaxHeight = exports.getNums = void 0;
 /**
  * @param rem: units in rem
  * @return value in px
@@ -16,7 +15,6 @@ function remToPixels(rem) {
 function getNums(str, unitLength) {
     return Number(str.slice(0, str.length - unitLength)) || 0;
 }
-exports.getNums = getNums;
 /**
  * @param ref React.MutableRefObject containing the node to calculate
  * @param maxHeight optional string value of the node's max-height, with or without units: '%' | 'px' | 'vh' | 'vw' | 'em' | 'rem'
@@ -73,7 +71,6 @@ function getMaxHeight(ref, maxHeight) {
     }
     return 0;
 }
-exports.getMaxHeight = getMaxHeight;
 /**
  * @param child HTMLDivElement
  * @return object {height: number, width: number} of the element in px, inclusive of margins, padding and borders
@@ -154,4 +151,10 @@ function getMinWidth(ref, maxHeight, constantHeight, constantWidth) {
     });
     return reqWidth;
 }
-exports.getMinWidth = getMinWidth;
+exports.default = {
+    remToPixels: remToPixels,
+    getNums: getNums,
+    getMaxHeight: getMaxHeight,
+    getHeightWidth: getHeightWidth,
+    getMinWidth: getMinWidth,
+};

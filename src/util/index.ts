@@ -14,7 +14,7 @@ function remToPixels(rem) {
  * @param unitLength: length of the unit of str
  * @return numerical value of str without units
  */
-export function getNums(str: string, unitLength: number): number {
+function getNums(str: string, unitLength: number): number {
   return Number(str.slice(0, str.length - unitLength)) || 0;
 }
 
@@ -23,10 +23,7 @@ export function getNums(str: string, unitLength: number): number {
  * @param maxHeight optional string value of the node's max-height, with or without units: '%' | 'px' | 'vh' | 'vw' | 'em' | 'rem'
  * @return maximum height in px, inclusive of margins, padding and borders
  */
-export function getMaxHeight(
-  ref: MutableRefObject<any>,
-  maxHeight = ""
-): number {
+function getMaxHeight(ref: MutableRefObject<any>, maxHeight = ""): number {
   let _maxH: string | number;
 
   /**
@@ -105,7 +102,7 @@ function getHeightWidth(child: HTMLDivElement): IHeightWidth {
  * @param maxHeight of the parent column in px
  * @return minimum width of element required to contain all its children in a column/-reverse wrap/-reverse flex format
  */
-export function getMinWidth(
+function getMinWidth(
   ref: MutableRefObject<any>,
   maxHeight: number,
   constantHeight = false,
@@ -168,3 +165,11 @@ export function getMinWidth(
   });
   return reqWidth;
 }
+
+export default {
+  remToPixels,
+  getNums,
+  getMaxHeight,
+  getHeightWidth,
+  getMinWidth,
+};

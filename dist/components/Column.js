@@ -31,10 +31,11 @@ var useDynamicWidth_1 = __importDefault(require("../hooks/useDynamicWidth"));
  * @param dependencies optional dependencies for the core hook used to set the component's width
  * @param effectOn default true - set the effect on or off
  * @param ref React.MutableRefObject<any> to be forwarded to the core parent div
+ * @param testId optional - testId to be assigned to the Component. If not provided, if id is provided it be appended to `rcfw-c-`. If neither are provided, the Component will have testId of `rcfw-c`
  */
 var Column = (0, react_1.forwardRef)(function (props, ref) {
     var rand = Math.random();
-    var _a = props.id, id = _a === void 0 ? "column-wrap-id-".concat(rand) : _a, _b = props.key, key = _b === void 0 ? "column-wrap-key-".concat(rand) : _b, children = props.children, _c = props.className, className = _c === void 0 ? "" : _c, _d = props.style, style = _d === void 0 ? {} : _d, _e = props.constantHeight, constantHeight = _e === void 0 ? false : _e, _f = props.constantWidth, constantWidth = _f === void 0 ? false : _f, _g = props.dependencies, dependencies = _g === void 0 ? [] : _g, _h = props.effectOn, effectOn = _h === void 0 ? true : _h;
+    var _a = props.id, id = _a === void 0 ? "column-wrap-id-".concat(rand) : _a, _b = props.key, key = _b === void 0 ? "column-wrap-key-".concat(rand) : _b, children = props.children, _c = props.className, className = _c === void 0 ? "" : _c, _d = props.style, style = _d === void 0 ? {} : _d, _e = props.constantHeight, constantHeight = _e === void 0 ? false : _e, _f = props.constantWidth, constantWidth = _f === void 0 ? false : _f, _g = props.dependencies, dependencies = _g === void 0 ? [] : _g, _h = props.effectOn, effectOn = _h === void 0 ? true : _h, _j = props.testId, testId = _j === void 0 ? "" : _j;
     var _ref = (0, react_1.useRef)(null);
     var columnRef = effectOn ? ref || _ref : null;
     /**
@@ -46,6 +47,6 @@ var Column = (0, react_1.forwardRef)(function (props, ref) {
         constantWidth: constantWidth,
         dependencies: dependencies,
     });
-    return ((0, jsx_runtime_1.jsx)("div", __assign({ id: id, className: className, style: style, ref: columnRef }, { children: children }), key));
+    return ((0, jsx_runtime_1.jsx)("div", __assign({ id: id, className: className, style: style, ref: columnRef, "data-testid": testId ? "rcfw-c-" + testId : "rcfw-c" }, { children: children }), key));
 });
 exports.default = Column;

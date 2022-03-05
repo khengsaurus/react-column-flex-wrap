@@ -14,7 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_isempty_1 = __importDefault(require("lodash.isempty"));
 var react_1 = require("react");
-var util_1 = require("../util");
+var util_1 = __importDefault(require("../util"));
 var useWindowDimensions_1 = __importDefault(require("./useWindowDimensions"));
 var wrapDirs = ["wrap", "wrap-reverse"];
 var columnDirs = ["column", "column-reverse"];
@@ -57,8 +57,8 @@ var useDynamicWidth = function (_a) {
                 wrapDirs.includes(flexWrap) &&
                 columnDirs.includes(flexDirection) &&
                 !(0, lodash_isempty_1.default)((_a = columnRef.current) === null || _a === void 0 ? void 0 : _a.children)) {
-                var maxHeightPx = (0, util_1.getMaxHeight)(columnRef, maxHeight === "none" || !maxHeight ? height : maxHeight);
-                var minWidth = (0, util_1.getMinWidth)(columnRef, maxHeightPx, constantHeight, constantWidth);
+                var maxHeightPx = util_1.default.getMaxHeight(columnRef, maxHeight === "none" || !maxHeight ? height : maxHeight);
+                var minWidth = util_1.default.getMinWidth(columnRef, maxHeightPx, constantHeight, constantWidth);
                 columnRef.current.style.display = display;
                 columnRef.current.style.flexDirection = flexDirection;
                 columnRef.current.style.flexWrap = flexWrap;
