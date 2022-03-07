@@ -1,0 +1,9 @@
+.column-reverse-wrap-reverse {
+  display: flex;
+  flex-direction: column-reverse;
+  flex-wrap: wrap-reverse;
+}
+
+._50px {
+  max-height: 50px;
+}

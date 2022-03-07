@@ -1,7 +1,7 @@
 import isEmpty from "lodash.isempty";
 import { useLayoutEffect } from "react";
 import { IUseDynamicWidthProps } from "../types";
-import util from "../util";
+import { getMinWidth } from "../util";
 import useWindowDimensions from "./useWindowDimensions";
 
 const wrapDirs = ["wrap", "wrap-reverse"];
@@ -35,8 +35,9 @@ const useDynamicWidth = ({
 
   return useLayoutEffect(() => {
     if (!!columnRef) {
-      let { display, flexDirection, flexWrap, height, maxHeight } =
-        window.getComputedStyle(columnRef.current);
+      let { display, flexDirection, flexWrap } = window.getComputedStyle(
+        columnRef.current
+      );
       if (!display || overrideDisplay.includes(display)) {
         display = "flex";
       }
@@ -53,16 +54,7 @@ const useDynamicWidth = ({
         columnDirs.includes(flexDirection) &&
         !isEmpty(columnRef.current?.children)
       ) {
-        const maxHeightPx = util.getMaxHeight(
-          columnRef,
-          maxHeight === "none" || !maxHeight ? height : maxHeight
-        );
-        const minWidth = util.getMinWidth(
-          columnRef,
-          maxHeightPx,
-          constantHeight,
-          constantWidth
-        );
+        const minWidth = getMinWidth(columnRef, constantHeight, constantWidth);
         columnRef.current.style.display = display;
         columnRef.current.style.flexDirection = flexDirection;
         columnRef.current.style.flexWrap = flexWrap;

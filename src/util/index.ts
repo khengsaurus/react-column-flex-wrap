@@ -19,28 +19,13 @@ function getNums(str: string, unitLength: number): number {
 }
 
 /**
+ * Get the max-height of a element reference, parsing the string value with unit '%' | 'px' | 'vh' | 'vw' | 'em' | 'rem' to a number (unit of pixel).
  * @param ref React.MutableRefObject containing the node to calculate
- * @param maxHeight optional string value of the node's max-height, with or without units: '%' | 'px' | 'vh' | 'vw' | 'em' | 'rem'
- * @return maximum height in px, inclusive of margins, padding and borders
+ * @return maximum height in px, inclusive of margin, padding and borders
  */
-function getMaxHeight(ref: MutableRefObject<any>, maxHeight = ""): number {
-  let _maxH: string | number;
-
-  /**
-   * use maxHeight if provided or maxHeight or height from computed styles
-   */
-  if (maxHeight) {
-    const _n = Number(maxHeight);
-    if (_n > 0) {
-      return _n;
-    }
-    _maxH = maxHeight;
-  } else {
-    let { height, maxHeight: _maxHeight } = window.getComputedStyle(
-      ref.current
-    );
-    _maxH = _maxHeight === "none" || !_maxHeight ? height : maxHeight;
-  }
+function getMaxHeight(ref: MutableRefObject<any>): number {
+  const { height, maxHeight } = window.getComputedStyle(ref.current);
+  const _maxH: string = maxHeight === "none" || !maxHeight ? height : maxHeight;
 
   if (_maxH.endsWith("px")) {
     return getNums(_maxH, 2);
@@ -83,65 +68,75 @@ function getMaxHeight(ref: MutableRefObject<any>, maxHeight = ""): number {
  */
 function getHeightWidth(child: HTMLDivElement): IHeightWidth {
   const styles = window.getComputedStyle(child);
-  const height = Math.ceil(
+  let _height = Math.ceil(
     child.offsetHeight +
       parseFloat(styles["marginTop"]) +
       parseFloat(styles["marginBottom"])
   );
-  const width = Math.ceil(
+  let _width = Math.ceil(
     child.offsetWidth +
       parseFloat(styles["marginLeft"]) +
       parseFloat(styles["marginRight"])
   );
-  return { height: Math.ceil(height), width: Math.ceil(width) };
+  if (!_height || !_width) {
+    console.warn(
+      "react-column-flex-wrap: used HTMLDivElement.style to get dimensions of element."
+    );
+    const { height, width } = child.style;
+    if (height.endsWith("px")) {
+      _height = getNums(height, 2);
+    }
+    if (width.endsWith("px")) {
+      _width = getNums(width, 2);
+    }
+  }
+
+  return { height: _height, width: _width };
 }
 
 /**
  * Get the minimum width of an element by iterating over its children.
  * @param ref React.MutableRefObject containing the column node
- * @param maxHeight of the parent column in px
+ * @param constantHeight take height of first child as reference for the others
+ * @param constantWidth take width of first child as reference for the others
  * @return minimum width of element required to contain all its children in a column/-reverse wrap/-reverse flex format
  */
-function getMinWidth(
+export function getMinWidth(
   ref: MutableRefObject<any>,
-  maxHeight: number,
   constantHeight = false,
   constantWidth = false
 ): number {
-  const children: HTMLDivElement[] = [].slice.call(ref.current?.children);
   let oldHeight = 0;
   let oldWidth = 0;
   let reqWidth = 0;
   let _cHeight = 0;
   let _cWidth = 0;
+  const children: HTMLDivElement[] = [].slice.call(ref.current?.children);
+  if (children.length === 0) {
+    return 0;
+  }
+  const maxHeight = getMaxHeight(ref);
+  /**
+   * Get dimensions of first child as reference
+   */
+  if (constantHeight || constantWidth) {
+    const { height, width } = getHeightWidth(children[0]);
+    _cHeight = height;
+    _cWidth = width;
+  }
   children.forEach((child: HTMLDivElement) => {
-    if (
-      (constantWidth && _cWidth === 0) ||
-      (constantHeight && _cHeight === 0)
-    ) {
-      /**
-       * init _c... as the values of the first child
-       */
-      const { height, width } = getHeightWidth(child);
-      _cHeight = height;
-      _cWidth = width;
-    }
-
     /**
      * If not constantHeight or not constantWidth, re-assign values on each iteration. Else, re-use _cHeight and _cWidth
      */
-    if (!constantHeight && !constantWidth) {
+    if (!constantHeight || !constantWidth) {
       const { height, width } = getHeightWidth(child);
-      _cHeight = height;
-      _cWidth = width;
-    } else if (!constantHeight) {
-      const { height } = getHeightWidth(child);
-      _cHeight = height;
-    } else if (!constantWidth) {
-      const { width } = getHeightWidth(child);
-      _cWidth = width;
+      if (!constantHeight) {
+        _cHeight = height;
+      }
+      if (!constantWidth) {
+        _cWidth = width;
+      }
     }
-
     const newHeight = oldHeight + _cHeight;
     if (newHeight > maxHeight) {
       /**
@@ -165,11 +160,3 @@ function getMinWidth(
   });
   return reqWidth;
 }
-
-export default {
-  remToPixels,
-  getNums,
-  getMaxHeight,
-  getHeightWidth,
-  getMinWidth,
-};
