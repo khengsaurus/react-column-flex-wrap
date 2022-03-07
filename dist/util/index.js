@@ -89,10 +89,11 @@ function getHeightWidth(child) {
  * @param constantWidth take width of first child as reference for the others
  * @return minimum width of element required to contain all its children in a column/-reverse wrap/-reverse flex format
  */
-function getMinWidth(ref, constantHeight, constantWidth) {
+function getMinWidth(ref, constantHeight, constantWidth, setMaxHeight) {
     var _a;
     if (constantHeight === void 0) { constantHeight = false; }
     if (constantWidth === void 0) { constantWidth = false; }
+    if (setMaxHeight === void 0) { setMaxHeight = 0; }
     var oldHeight = 0;
     var oldWidth = 0;
     var reqWidth = 0;
@@ -102,7 +103,7 @@ function getMinWidth(ref, constantHeight, constantWidth) {
     if (children.length === 0) {
         return 0;
     }
-    var maxHeight = getMaxHeight(ref);
+    var maxHeight = setMaxHeight > 0 ? setMaxHeight : getMaxHeight(ref);
     /**
      * Get dimensions of first child as reference
      */

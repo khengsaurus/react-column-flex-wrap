@@ -21,8 +21,11 @@ const overrideDisplay = ["none", "inline", "block", "inline-block"];
  */
 const useDynamicWidth = ({
   columnRef,
-  constantHeight,
-  constantWidth,
+  columnReverse = false,
+  wrapReverse = false,
+  maxHeight = 0,
+  constantHeight = false,
+  constantWidth = false,
   dependencies = [],
 }: IUseDynamicWidthProps) => {
   /**
@@ -34,27 +37,35 @@ const useDynamicWidth = ({
     : [];
 
   return useLayoutEffect(() => {
-    if (!!columnRef) {
+    if (!!columnRef && !isEmpty(columnRef.current?.children)) {
       let { display, flexDirection, flexWrap } = window.getComputedStyle(
         columnRef.current
       );
       if (!display || overrideDisplay.includes(display)) {
         display = "flex";
       }
-      if (!flexDirection || overrideFlex.includes(flexDirection)) {
+      if (columnReverse) {
+        flexDirection = "column-reverse";
+      } else if (!flexDirection || overrideFlex.includes(flexDirection)) {
         flexDirection = "column";
       }
-      if (!flexWrap || overrideWrap.includes(flexWrap)) {
+      if (wrapReverse) {
+        flexWrap = "wrap-reverse";
+      } else if (!flexWrap || overrideWrap.includes(flexWrap)) {
         flexWrap = "wrap";
       }
 
       if (
         display === "flex" &&
         wrapDirs.includes(flexWrap) &&
-        columnDirs.includes(flexDirection) &&
-        !isEmpty(columnRef.current?.children)
+        columnDirs.includes(flexDirection)
       ) {
-        const minWidth = getMinWidth(columnRef, constantHeight, constantWidth);
+        const minWidth = getMinWidth(
+          columnRef,
+          constantHeight,
+          constantWidth,
+          maxHeight
+        );
         columnRef.current.style.display = display;
         columnRef.current.style.flexDirection = flexDirection;
         columnRef.current.style.flexWrap = flexWrap;

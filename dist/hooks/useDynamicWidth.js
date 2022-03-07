@@ -32,7 +32,7 @@ var overrideDisplay = ["none", "inline", "block", "inline-block"];
  */
 var useDynamicWidth = function (_a) {
     var _b;
-    var columnRef = _a.columnRef, constantHeight = _a.constantHeight, constantWidth = _a.constantWidth, _c = _a.dependencies, dependencies = _c === void 0 ? [] : _c;
+    var columnRef = _a.columnRef, _c = _a.columnReverse, columnReverse = _c === void 0 ? false : _c, _d = _a.wrapReverse, wrapReverse = _d === void 0 ? false : _d, _e = _a.maxHeight, maxHeight = _e === void 0 ? 0 : _e, _f = _a.constantHeight, constantHeight = _f === void 0 ? false : _f, _g = _a.constantWidth, constantWidth = _g === void 0 ? false : _g, _h = _a.dependencies, dependencies = _h === void 0 ? [] : _h;
     /**
      * Proxy ref to detect changes in window dimensions
      */
@@ -42,22 +42,27 @@ var useDynamicWidth = function (_a) {
         : [];
     return (0, react_1.useLayoutEffect)(function () {
         var _a;
-        if (!!columnRef) {
+        if (!!columnRef && !(0, lodash_isempty_1.default)((_a = columnRef.current) === null || _a === void 0 ? void 0 : _a.children)) {
             var _b = window.getComputedStyle(columnRef.current), display = _b.display, flexDirection = _b.flexDirection, flexWrap = _b.flexWrap;
             if (!display || overrideDisplay.includes(display)) {
                 display = "flex";
             }
-            if (!flexDirection || overrideFlex.includes(flexDirection)) {
+            if (columnReverse) {
+                flexDirection = "column-reverse";
+            }
+            else if (!flexDirection || overrideFlex.includes(flexDirection)) {
                 flexDirection = "column";
             }
-            if (!flexWrap || overrideWrap.includes(flexWrap)) {
+            if (wrapReverse) {
+                flexWrap = "wrap-reverse";
+            }
+            else if (!flexWrap || overrideWrap.includes(flexWrap)) {
                 flexWrap = "wrap";
             }
             if (display === "flex" &&
                 wrapDirs.includes(flexWrap) &&
-                columnDirs.includes(flexDirection) &&
-                !(0, lodash_isempty_1.default)((_a = columnRef.current) === null || _a === void 0 ? void 0 : _a.children)) {
-                var minWidth = (0, util_1.getMinWidth)(columnRef, constantHeight, constantWidth);
+                columnDirs.includes(flexDirection)) {
+                var minWidth = (0, util_1.getMinWidth)(columnRef, constantHeight, constantWidth, maxHeight);
                 columnRef.current.style.display = display;
                 columnRef.current.style.flexDirection = flexDirection;
                 columnRef.current.style.flexWrap = flexWrap;

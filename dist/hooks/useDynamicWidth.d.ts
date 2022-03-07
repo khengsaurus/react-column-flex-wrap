@@ -8,5 +8,5 @@ import { IUseDynamicWidthProps } from "../types";
  *
  * `flex-wrap: wrap` or wrap-reverse if specified via styles or a css class
  */
-declare const useDynamicWidth: ({ columnRef, constantHeight, constantWidth, dependencies, }: IUseDynamicWidthProps) => void;
+declare const useDynamicWidth: ({ columnRef, columnReverse, wrapReverse, maxHeight, constantHeight, constantWidth, dependencies, }: IUseDynamicWidthProps) => void;
 export default useDynamicWidth;

@@ -104,7 +104,8 @@ function getHeightWidth(child: HTMLDivElement): IHeightWidth {
 export function getMinWidth(
   ref: MutableRefObject<any>,
   constantHeight = false,
-  constantWidth = false
+  constantWidth = false,
+  setMaxHeight = 0
 ): number {
   let oldHeight = 0;
   let oldWidth = 0;
@@ -115,7 +116,7 @@ export function getMinWidth(
   if (children.length === 0) {
     return 0;
   }
-  const maxHeight = getMaxHeight(ref);
+  const maxHeight = setMaxHeight > 0 ? setMaxHeight : getMaxHeight(ref);
   /**
    * Get dimensions of first child as reference
    */
