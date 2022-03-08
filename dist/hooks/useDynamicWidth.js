@@ -63,6 +63,9 @@ var useDynamicWidth = function (_a) {
                 wrapDirs.includes(flexWrap) &&
                 columnDirs.includes(flexDirection)) {
                 var minWidth = (0, util_1.getMinWidth)(columnRef, constantHeight, constantWidth, maxHeight);
+                if (maxHeight > 0) {
+                    columnRef.current.style.maxHeight = "".concat(maxHeight, "px");
+                }
                 columnRef.current.style.display = display;
                 columnRef.current.style.flexDirection = flexDirection;
                 columnRef.current.style.flexWrap = flexWrap;

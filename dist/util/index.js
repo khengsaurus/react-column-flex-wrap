@@ -71,7 +71,7 @@ function getHeightWidth(child) {
         parseFloat(styles["marginLeft"]) +
         parseFloat(styles["marginRight"]));
     if (!_height || !_width) {
-        console.warn("react-column-flex-wrap: used HTMLDivElement.style to get dimensions of element.");
+        // For testing
         var _a = child.style, height = _a.height, width = _a.width;
         if (height.endsWith("px")) {
             _height = getNums(height, 2);

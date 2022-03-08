@@ -8,14 +8,15 @@ import { singletonHook } from "react-singleton-hook";
  * @param on boolean
  * @return proxy number for window size
  */
-const useWindowDimensionsImpl = () => {
+export const useWindowDimensionsImpl = () => {
   const [windowDimProxy, setWindowDimProxy] = useState(0);
 
   const handleResize = useCallback(() => {
-    setWindowDimProxy(window.innerHeight + 100 * window.innerWidth);
+    setWindowDimProxy(window.innerHeight + 1000 * window.innerWidth);
   }, []);
 
   useEffect(() => {
+    handleResize();
     window.addEventListener("resize", handleResize);
 
     return () => window.removeEventListener("resize", handleResize);

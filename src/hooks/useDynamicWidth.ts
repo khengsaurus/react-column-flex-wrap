@@ -66,6 +66,9 @@ const useDynamicWidth = ({
           constantWidth,
           maxHeight
         );
+        if (maxHeight > 0) {
+          columnRef.current.style.maxHeight = `${maxHeight}px`;
+        }
         columnRef.current.style.display = display;
         columnRef.current.style.flexDirection = flexDirection;
         columnRef.current.style.flexWrap = flexWrap;
