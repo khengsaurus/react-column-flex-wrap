@@ -10,13 +10,10 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var jsx_runtime_1 = require("react/jsx-runtime");
 var react_1 = require("react");
-var useDynamicWidth_1 = __importDefault(require("../hooks/useDynamicWidth"));
+var hooks_1 = require("../hooks");
 /**
  * A flex div with `flex-flow: column wrap` by default. Its width will expand to contain its children.
  * Supports column-reverse and wrap-reverse if passed via props, styles or css class, but will override other display and flex-wrap styles.
@@ -44,7 +41,7 @@ var Column = (0, react_1.forwardRef)(function (props, ref) {
     /**
      * Call to main hook to set component size.
      */
-    (0, useDynamicWidth_1.default)({
+    (0, hooks_1.useDynamicWidth)({
         columnRef: columnRef,
         columnReverse: columnReverse,
         wrapReverse: wrapReverse,

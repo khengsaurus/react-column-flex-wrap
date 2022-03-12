@@ -1,9 +1,11 @@
 import { render } from "@testing-library/react";
 import { cleanup, renderHook } from "@testing-library/react-hooks";
 import React from "react";
-import useDynamicWidth from "../../src/hooks/useDynamicWidth";
+import * as hooks from "../../src/hooks";
+import { unfreezeImport } from "../helper";
 
 beforeAll(() => {
+  unfreezeImport(hooks, "useIsoEffect");
   jest.spyOn(console, "error").mockImplementation(() => {});
 });
 
@@ -13,16 +15,18 @@ afterEach(() => {
 });
 
 describe("useDynamicWidth with props", () => {
-  it("call useLayoutEffect once to set CSS properties via props", () => {
-    const spyLayoutEffect = jest.spyOn(React, "useLayoutEffect");
+  it("when window is undefined, call useEffect once to set CSS properties via props", () => {
+    const spyIsoEffect = jest.spyOn(hooks, "useIsoEffect");
     const mockRef = { current: null };
     render(
       <div ref={mockRef}>
         <div style={{ height: 50, width: 50 }} />
+        <div style={{ height: 50, width: 50 }} />
+        <div style={{ height: 50, width: 50 }} />
       </div>
     );
     renderHook(() => {
-      useDynamicWidth({
+      hooks.useDynamicWidth({
         columnRef: mockRef,
         columnReverse: true,
         wrapReverse: true,
@@ -31,10 +35,11 @@ describe("useDynamicWidth with props", () => {
     });
 
     const styles = window.getComputedStyle(mockRef.current);
+    expect(spyIsoEffect).toHaveBeenCalledTimes(1);
     expect(styles.display).toBe("flex");
     expect(styles.flexDirection).toBe("column-reverse");
     expect(styles.flexWrap).toBe("wrap-reverse");
-    expect(styles.width).toBe("50px");
-    expect(spyLayoutEffect).toHaveBeenCalledTimes(1);
+    expect(styles.width).toBe("100px");
+    // 3 child divs 50px each with container max-height 100px -> container width of 100px
   });
 });

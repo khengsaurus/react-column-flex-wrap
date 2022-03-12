@@ -1,5 +1,5 @@
 import React, { forwardRef, MutableRefObject, useRef } from "react";
-import useDynamicWidth from "../hooks/useDynamicWidth";
+import { useDynamicWidth } from "../hooks";
 import { IColumnProps } from "../types";
 
 /**

@@ -13,16 +13,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_isempty_1 = __importDefault(require("lodash.isempty"));
-var react_1 = require("react");
+var _1 = require(".");
 var util_1 = require("../util");
-var useWindowDimensions_1 = __importDefault(require("./useWindowDimensions"));
 var wrapDirs = ["wrap", "wrap-reverse"];
 var columnDirs = ["column", "column-reverse"];
 var overrideWrap = ["none", "nowrap"];
 var overrideFlex = ["none", "row", "row-reverse"];
 var overrideDisplay = ["none", "inline", "block", "inline-block"];
 /**
- * Custom hook using useLayoutEffect to calculate minimum required width of element and set the following CSS properties:
+ * Custom hook using useEffect or useLayoutEffect (when window is defined) to
+ * calculate minimum required width of element and set the following CSS properties:
  *
  * `display: flex`
  *
@@ -36,11 +36,11 @@ var useDynamicWidth = function (_a) {
     /**
      * Proxy ref to detect changes in window dimensions
      */
-    var windowRef = (0, useWindowDimensions_1.default)();
+    var windowRef = (0, _1.useWindowDimensions)();
     var children = columnRef
         ? Array.from(((_b = columnRef.current) === null || _b === void 0 ? void 0 : _b.children) || [])
         : [];
-    return (0, react_1.useLayoutEffect)(function () {
+    return (0, _1.useIsoEffect)(function () {
         var _a;
         if (!!columnRef && !(0, lodash_isempty_1.default)((_a = columnRef.current) === null || _a === void 0 ? void 0 : _a.children)) {
             var _b = window.getComputedStyle(columnRef.current), display = _b.display, flexDirection = _b.flexDirection, flexWrap = _b.flexWrap;

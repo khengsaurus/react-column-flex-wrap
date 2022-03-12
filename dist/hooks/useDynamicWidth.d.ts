@@ -1,6 +1,7 @@
 import { IUseDynamicWidthProps } from "../types";
 /**
- * Custom hook using useLayoutEffect to calculate minimum required width of element and set the following CSS properties:
+ * Custom hook using useEffect or useLayoutEffect (when window is defined) to
+ * calculate minimum required width of element and set the following CSS properties:
  *
  * `display: flex`
  *
